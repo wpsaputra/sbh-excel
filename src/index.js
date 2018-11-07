@@ -1,4 +1,15 @@
 import { app, BrowserWindow } from 'electron';
+// import $ from "jquery";
+// var $ = require('jquery')(require("jsdom").jsdom().parentWindow0);
+// require("jsdom").env("", function(err, window) {
+//   if (err) {
+//       console.error(err);
+//       return;
+//   }
+
+//   var $ = require("jquery")(window);
+// });
+
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -20,7 +31,7 @@ const createWindow = () => {
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {

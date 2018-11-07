@@ -1,13 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <!-- Well hey there!!! -->
-    <!-- <input style="display:none;" id="fileDialog" type="file" /> -->
-    <input type="file" webkitdirectory />
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <!-- Well hey there!!! -->
+  <!-- <input style="display:none;" id="fileDialog" type="file" /> -->
+  <input id="folder" type="file" webkitdirectory />
+</body>
+<script>
+  window.$ = window.jQuery = require('jquery');
+  const fs = require('fs');
+  var Excel = require('exceljs');
+  var exec = require('child_process').execSync;
+  
+  function updateExcel(path){
+    var workbook = new Excel.Workbook();
+    workbook.xlsx.readFile(path)
+      .then(function () {
+        var worksheet = workbook.getWorksheet(1);
+        var row = worksheet.getRow(5);
+        row.getCell(1).value = 5; // A5's value set to 5
+        row.commit();
+        console.log(path+' is commited');
+        return workbook.xlsx.writeFile(path);
+      })
+  }
+
+  function updateExcelCmd(path){
+    var oldpath = path;
+    var newpath = path.replace(".xls", ".xlsx");
+    // var command = 'excelcnv.exe -oice "s1" "s2"';
+    var command = '"C:\\Program Files\\Microsoft Office\\Office15\\excelcnv.exe" -oice "s1" "s2"';
+    command = command.replace("s1", oldpath);
+    command = command.replace("s2", newpath);
+    execute(command);
+    // console.log(path+"done");
+
+
+
+  }
+
+  function execute(command){
+    console.log(command);
+    exec(command, function(error, stdout, stderr){ console.log(stdout); });
+  };
+
+  $("#folder").change(function () {
+    var path = $('#folder')[0].files[0].path;
+    fs.readdir(path, (err, files) => {
+      files.forEach(file => {
+        // console.log(path+'\\'+file);
+        var full_path = path+'\\'+file;
+        // updateExcel(full_path)
+        updateExcelCmd(full_path)
+
+      });
+    })
+
+  });
+
+</script>
 
 </html>
