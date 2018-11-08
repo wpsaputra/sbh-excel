@@ -9,7 +9,10 @@
 <body>
   <!-- Well hey there!!! -->
   <!-- <input style="display:none;" id="fileDialog" type="file" /> -->
+  <h3>convert xls to xlsx</h3>
   <input id="folder" type="file" webkitdirectory />
+  <h3>excel 1.1</h3>
+  <input id="folder11" type="file" webkitdirectory />
 </body>
 <script>
   window.$ = window.jQuery = require('jquery');
@@ -39,9 +42,6 @@
     command = command.replace("s2", newpath);
     execute(command);
     // console.log(path+"done");
-
-
-
   }
 
   function execute(command){
@@ -60,6 +60,91 @@
 
       });
     })
+
+  });
+
+  String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.replace(new RegExp(search, 'g'), replacement);
+  };
+
+  function updateExcel11Formula(path){
+    var workbook = new Excel.Workbook();
+    workbook.xlsx.readFile(path)
+      .then(function () {
+        // var worksheet = workbook.getWorksheet(1);
+        // var row = worksheet.getRow(5);
+        // row.getCell(1).value = 'WAYANO'; // A5's value set to 5
+        // row.commit();
+
+        var worksheet = workbook.getWorksheet(1);
+
+        worksheet.getCell("I10").fill = {
+            type: 'pattern',
+            pattern:'solid',
+            fgColor:{argb:'FFFF0000'}
+        };
+        worksheet.getCell("I10").value = "Formula total dan rata-rata per bulan jangan dirubah!";
+
+         worksheet.getCell("I12").fill = {
+            type: 'pattern',
+            pattern:'solid',
+            fgColor:{argb:'FFFF0000'}
+        };
+        worksheet.getCell("I12").value = "Perubahan pada kolom BL ditandai dengan fill kuning pada cell!";
+
+        for(var i=11; i<500; i++){
+          var f_value = worksheet.getCell("F"+i).value;
+          var g_value = worksheet.getCell("G"+i).value;
+
+          var f_formula = 'Bx+Cx+Dx+Ex';
+          f_formula = f_formula.replaceAll("x", i);
+
+          var g_formula = 'Fx/4';
+          g_formula = g_formula.replaceAll("x", i);
+
+          worksheet.getCell("F"+i).value = { formula: f_formula, result: f_value };
+          worksheet.getCell("G"+i).value = { formula: g_formula, result: g_value };
+
+        }
+
+
+        // var f_value = worksheet.getCell("F11").value;
+        // var g_value = worksheet.getCell("G11").value;
+        // worksheet.getCell("F11").value = { formula: 'B11+C11+D11+E11', result: f_value };
+        // worksheet.getCell("G11").value = { formula: 'F11/4', result: g_value };
+
+        // var cell = worksheet.getCell('C3');
+        // cell.value = new Date(1968, 5, 1);
+        // cell.commit();
+
+        // var row = worksheet.getRow(5);
+        // row.getCell(1).value = 'YYYY'; // A5's value set to 5
+        // row.commit();
+
+
+
+        console.log(path+' is commited');
+        return workbook.xlsx.writeFile(path);
+      })
+  }
+
+  
+
+  $("#folder11").change(function () {
+    var path = $('#folder11')[0].files[0].path;
+    fs.readdir(path, (err, files) => {
+      files.forEach(file => {
+        // console.log(path+'\\'+file);
+        var full_path = path+'\\'+file;
+        updateExcel11Formula(full_path);
+        // updateExcel(full_path);
+
+      });
+      // alert("Update excel tabel 1.1 is done");
+    });
+
+    
 
   });
 
