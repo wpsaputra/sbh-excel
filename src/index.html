@@ -72,11 +72,6 @@
     var workbook = new Excel.Workbook();
     workbook.xlsx.readFile(path)
       .then(function () {
-        // var worksheet = workbook.getWorksheet(1);
-        // var row = worksheet.getRow(5);
-        // row.getCell(1).value = 'WAYANO'; // A5's value set to 5
-        // row.commit();
-
         var worksheet = workbook.getWorksheet(1);
 
         worksheet.getCell("I10").fill = {
@@ -107,22 +102,6 @@
           worksheet.getCell("G"+i).value = { formula: g_formula, result: g_value };
 
         }
-
-
-        // var f_value = worksheet.getCell("F11").value;
-        // var g_value = worksheet.getCell("G11").value;
-        // worksheet.getCell("F11").value = { formula: 'B11+C11+D11+E11', result: f_value };
-        // worksheet.getCell("G11").value = { formula: 'F11/4', result: g_value };
-
-        // var cell = worksheet.getCell('C3');
-        // cell.value = new Date(1968, 5, 1);
-        // cell.commit();
-
-        // var row = worksheet.getRow(5);
-        // row.getCell(1).value = 'YYYY'; // A5's value set to 5
-        // row.commit();
-
-
 
         console.log(path+' is commited');
         return workbook.xlsx.writeFile(path);
