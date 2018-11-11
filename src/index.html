@@ -218,6 +218,7 @@
     // await targetWorkbook.xlsx.writeFile('target.xlsx');
     
     targetWorksheet.model = sourceWorksheet.model;
+    targetWorksheet.name = "Sheet2";
 
     await targetWorkbook.xlsx.writeFile(destination_path);
     console.log(destination_path+" saved");
