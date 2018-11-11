@@ -15,6 +15,14 @@
   <input id="folder11" type="file" webkitdirectory />
   <h3>excel 1.3</h3>
   <input id="folder13" type="file" webkitdirectory />
+  <div style="border-style: solid; border-width: 5px;">
+    <h3>Merge</h3>
+    <input id="merge1" type="file" webkitdirectory />
+    <input id="merge2" type="file" webkitdirectory />
+    <input id="destination" type="file" webkitdirectory />
+    <button id="merge">process</button>
+
+  </div>
 
 </body>
 <script>
@@ -22,8 +30,8 @@
   const fs = require('fs');
   var Excel = require('exceljs');
   var exec = require('child_process').execSync;
-  
-  function updateExcel(path){
+
+  function updateExcel(path) {
     var workbook = new Excel.Workbook();
     workbook.xlsx.readFile(path)
       .then(function () {
@@ -31,12 +39,12 @@
         var row = worksheet.getRow(5);
         row.getCell(1).value = 5; // A5's value set to 5
         row.commit();
-        console.log(path+' is commited');
+        console.log(path + ' is commited');
         return workbook.xlsx.writeFile(path);
       })
   }
 
-  function updateExcelCmd(path){
+  function updateExcelCmd(path) {
     var oldpath = path;
     var newpath = path.replace(".xls", ".xlsx");
     // var command = 'excelcnv.exe -oice "s1" "s2"';
@@ -47,9 +55,9 @@
     // console.log(path+"done");
   }
 
-  function execute(command){
+  function execute(command) {
     console.log(command);
-    exec(command, function(error, stdout, stderr){ console.log(stdout); });
+    exec(command, function (error, stdout, stderr) { console.log(stdout); });
   };
 
   $("#folder").change(function () {
@@ -57,7 +65,7 @@
     fs.readdir(path, (err, files) => {
       files.forEach(file => {
         // console.log(path+'\\'+file);
-        var full_path = path+'\\'+file;
+        var full_path = path + '\\' + file;
         // updateExcel(full_path)
         updateExcelCmd(full_path)
 
@@ -66,34 +74,34 @@
 
   });
 
-  String.prototype.replaceAll = function(search, replacement) {
-      var target = this;
-      return target.replace(new RegExp(search, 'g'), replacement);
+  String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
   };
 
-  function updateExcel11Formula(path){
+  function updateExcel11Formula(path) {
     var workbook = new Excel.Workbook();
     workbook.xlsx.readFile(path)
       .then(function () {
         var worksheet = workbook.getWorksheet(1);
 
         worksheet.getCell("I10").fill = {
-            type: 'pattern',
-            pattern:'solid',
-            fgColor:{argb:'FFFF0000'}
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFFF0000' }
         };
         worksheet.getCell("I10").value = "Formula total dan rata-rata per bulan jangan dirubah!";
 
-         worksheet.getCell("I12").fill = {
-            type: 'pattern',
-            pattern:'solid',
-            fgColor:{argb:'FFFF0000'}
+        worksheet.getCell("I12").fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFFF0000' }
         };
         worksheet.getCell("I12").value = "Perubahan pada kolom BL ditandai dengan fill kuning pada cell!";
 
-        for(var i=11; i<500; i++){
-          var f_value = worksheet.getCell("F"+i).value;
-          var g_value = worksheet.getCell("G"+i).value;
+        for (var i = 11; i < 500; i++) {
+          var f_value = worksheet.getCell("F" + i).value;
+          var g_value = worksheet.getCell("G" + i).value;
 
           var f_formula = 'Bx+Cx+Dx+Ex';
           f_formula = f_formula.replaceAll("x", i);
@@ -101,12 +109,12 @@
           var g_formula = 'Fx/4';
           g_formula = g_formula.replaceAll("x", i);
 
-          worksheet.getCell("F"+i).value = { formula: f_formula, result: f_value };
-          worksheet.getCell("G"+i).value = { formula: g_formula, result: g_value };
+          worksheet.getCell("F" + i).value = { formula: f_formula, result: f_value };
+          worksheet.getCell("G" + i).value = { formula: g_formula, result: g_value };
 
         }
 
-        console.log(path+' is commited');
+        console.log(path + ' is commited');
         return workbook.xlsx.writeFile(path);
       })
   }
@@ -116,7 +124,7 @@
     fs.readdir(path, (err, files) => {
       files.forEach(file => {
         // console.log(path+'\\'+file);
-        var full_path = path+'\\'+file;
+        var full_path = path + '\\' + file;
         updateExcel11Formula(full_path);
         // updateExcel(full_path);
 
@@ -126,31 +134,31 @@
 
   });
 
-  function updateExcel12Formula(path){
+  function updateExcel12Formula(path) {
     var workbook = new Excel.Workbook();
     workbook.xlsx.readFile(path)
       .then(function () {
         var worksheet = workbook.getWorksheet(1);
 
         worksheet.getCell("E10").fill = {
-            type: 'pattern',
-            pattern:'solid',
-            fgColor:{argb:'FFFF0000'}
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFFF0000' }
         };
         worksheet.getCell("E10").value = "Total Selama Sebulan jangan dirubah!";
 
 
-        for(var i=10; i<500; i++){
-          var c_value = worksheet.getCell("C"+i).value;
+        for (var i = 10; i < 500; i++) {
+          var c_value = worksheet.getCell("C" + i).value;
 
           var c_formula = 'Bx*30/7';
           c_formula = c_formula.replaceAll("x", i);
 
-          worksheet.getCell("C"+i).value = { formula: c_formula, result: c_value };
+          worksheet.getCell("C" + i).value = { formula: c_formula, result: c_value };
 
         }
 
-        console.log(path+' is commited');
+        console.log(path + ' is commited');
         return workbook.xlsx.writeFile(path);
       })
   }
@@ -160,13 +168,95 @@
     fs.readdir(path, (err, files) => {
       files.forEach(file => {
         // console.log(path+'\\'+file);
-        var full_path = path+'\\'+file;
+        var full_path = path + '\\' + file;
         updateExcel12Formula(full_path);
         // updateExcel(full_path);
 
       });
       // alert("Update excel tabel 1.1 is done");
     });
+
+  });
+
+  async function copyExcel(target_path, source_path, destination_path) {
+    let targetWorkbook = new Excel.Workbook();
+    targetWorkbook = await targetWorkbook.xlsx.readFile(target_path);
+    const targetWorksheet = targetWorkbook.getWorksheet('Sheet2'); // you can add new sheet as well.
+
+    let sourceWorkbook = new Excel.Workbook();
+    sourceWorkbook = await sourceWorkbook.xlsx.readFile(source_path);
+    const sourceWorksheet = sourceWorkbook.getWorksheet('Sheet1');
+
+    sourceWorksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
+      var targetRow = targetWorksheet.getRow(rowNumber);
+      row.eachCell({ includeEmpty: false }, (cell, cellNumber) => {
+        targetRow.getCell(cellNumber).value = cell.value;
+      });
+      row.commit();
+    });
+    // await targetWorkbook.xlsx.writeFile('target.xlsx');
+    await targetWorkbook.xlsx.writeFile(destination_path);
+    console.log(destination_path+" saved");
+  }
+
+  async function copyExcel2(target_path, source_path, destination_path) {
+    let targetWorkbook = new Excel.Workbook();
+    targetWorkbook = await targetWorkbook.xlsx.readFile(target_path);
+    const targetWorksheet = targetWorkbook.getWorksheet('Sheet2'); // you can add new sheet as well.
+
+    let sourceWorkbook = new Excel.Workbook();
+    sourceWorkbook = await sourceWorkbook.xlsx.readFile(source_path);
+    const sourceWorksheet = sourceWorkbook.getWorksheet('Sheet1');
+
+    // sourceWorksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
+    //   var targetRow = targetWorksheet.getRow(rowNumber);
+    //   row.eachCell({ includeEmpty: false }, (cell, cellNumber) => {
+    //     targetRow.getCell(cellNumber).value = cell.value;
+    //   });
+    //   row.commit();
+    // });
+    // await targetWorkbook.xlsx.writeFile('target.xlsx');
+    
+    targetWorksheet.model = sourceWorksheet.model;
+
+    await targetWorkbook.xlsx.writeFile(destination_path);
+    console.log(destination_path+" saved");
+  }
+
+  $("#merge").click(function () {
+    // alert("merge clicked");
+    var path1 = $('#merge1')[0].files[0].path;
+    var path2 = $('#merge2')[0].files[0].path;
+    var path_destination = $('#destination')[0].files[0].path;
+
+    var files1 = fs.readdirSync(path1);
+    var arr_files1 = [];
+    for (var i in files1) {
+      arr_files1[i] = path1 + '\\' + files1[i];
+    }
+
+    var files2 = fs.readdirSync(path2);
+    var arr_files2 = [];
+    var arr_files_destination = [];
+    for (var i in files2) {
+      arr_files2[i] = path2 + '\\' + files2[i];
+      arr_files_destination[i] = path_destination + '\\merge' + files2[i];
+    }
+
+    // console.log(arr_files1);
+    // console.log(arr_files2);
+
+    for (var i in files1) {
+      // copyExcel(arr_files1[i], arr_files2[i], arr_files_destination[i]);
+      copyExcel2(arr_files1[i], arr_files2[i], arr_files_destination[i]);
+    }
+
+    
+
+
+
+
+
 
   });
 
