@@ -1,0 +1,77 @@
+=Sheet1!H1-Sheet1!H2+Sheet2!D10
+
+=Sheet1!H2
+
+=Sheet1!H3
+
+Sheets("Sheet3").Select
+    Range("A1:M8").Select
+    Selection.Copy
+    Sheets.Add After:=ActiveSheet
+    Selection.PasteSpecial Paste:=xlPasteColumnWidths, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    ActiveSheet.Paste
+    Sheets("Sheet3").Select
+    Columns("A:A").Select
+    Range("A2").Activate
+    Application.CutCopyMode = False
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("A9").Select
+    ActiveCell.FormulaR1C1 = "=RC[1]&RC[2]"
+    Range("A9").Select
+    Selection.AutoFill Destination:=Range("A9:A500"), Type:=xlFillDefault
+    Range("A9:A500").Select
+    Sheets("Sheet4").Select
+    Range("A9").Select
+    ActiveCell.FormulaR1C1 = "=LEFT(Sheet1!R[-5]C[1],5)"
+    Range("B9").Select
+    ActiveCell.FormulaR1C1 = "=MID(Sheet1!R[-5]C,9,3)"
+    Columns("A:A").Select
+    Range("A2").Activate
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("A9").Select
+    ActiveCell.FormulaR1C1 = "=RC[1]&RC[2]"
+    Range("D9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-3],Sheet3!R9C1:R500C14,4,FALSE)"
+    Range("D9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-3],Sheet3!R9C1:R500C14,4,FALSE)"
+    Range("E9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-4],Sheet3!R9C1:R500C14,,FALSE)"
+    Range("E9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-4],Sheet3!R9C1:R500C14,5,FALSE)"
+    Range("F9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-5],Sheet3!R9C1:R500C14,6,FALSE)"
+    Range("G9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-6],Sheet3!R9C1:R500C14,7,FALSE)"
+    Range("H9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-7],Sheet3!R9C1:R500C14,8,FALSE)"
+    Range("I9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-8],Sheet3!R9C1:R500C14,9,FALSE)"
+    Range("J9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-9],Sheet3!R9C1:R500C14,10,FALSE)"
+    Range("K9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-10],Sheet3!R9C1:R500C14,11,FALSE)"
+    Range("L9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-11],Sheet3!R9C1:R500C14,12,FALSE)"
+    Range("M9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-12],Sheet3!R9C1:R500C14,13,FALSE)"
+    Range("N9").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC[-13],Sheet3!R9C1:R500C14,14,FALSE)"
+    Range("A9:N9").Select
+    Selection.Copy
+    Range("A10").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Range("J10").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=Sheet1!R[-9]C[-2]-Sheet1!R[-8]C[-2]+Sheet2!RC[-6]"
+    Range("K10").Select
+    ActiveCell.FormulaR1C1 = "=Sheet1!R[-8]C[-3]"
+    Range("L10").Select
+    ActiveCell.FormulaR1C1 = "=Sheet1!R[-7]C[-4]"
+    Range("N10").Select
+    ActiveCell.FormulaR1C1 = "=(RC[-4]+RC[-3])/RC[-1]"
+    Range("N10").Select
+    Selection.Style = "Percent"
+    Selection.NumberFormat = "0.0%"
+    Selection.NumberFormat = "0.00%"
