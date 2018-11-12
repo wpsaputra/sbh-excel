@@ -203,10 +203,16 @@
     let targetWorkbook = new Excel.Workbook();
     targetWorkbook = await targetWorkbook.xlsx.readFile(target_path);
     const targetWorksheet = targetWorkbook.getWorksheet('Sheet2'); // you can add new sheet as well.
+    const targetWorksheet3 = targetWorkbook.getWorksheet('Sheet3'); // you can add new sheet as well.
 
     let sourceWorkbook = new Excel.Workbook();
     sourceWorkbook = await sourceWorkbook.xlsx.readFile(source_path);
     const sourceWorksheet = sourceWorkbook.getWorksheet('Sheet1');
+
+    // tabel 1.8 path ubah manual di code
+    let sourceWorkbook3 = new Excel.Workbook();
+    sourceWorkbook3 = await sourceWorkbook3.xlsx.readFile("D:\\wix\\tw1\\Tabel 1.8. Nilai dan Persentase Pengeluaran Konsumsi, Bukan Konsumsi, dan Pendapatan per Bulan menurut Rumah Tangga Sampel_74_71_1_20181101_07-51.xlsx");
+    const sourceWorksheet3 = sourceWorkbook3.getWorksheet('Sheet1');
 
     // sourceWorksheet.eachRow({ includeEmpty: false }, (row, rowNumber) => {
     //   var targetRow = targetWorksheet.getRow(rowNumber);
@@ -219,6 +225,9 @@
     
     targetWorksheet.model = sourceWorksheet.model;
     targetWorksheet.name = "Sheet2";
+
+    targetWorksheet3.model = sourceWorksheet3.model;
+    targetWorksheet3.name = "Sheet3";
 
     await targetWorkbook.xlsx.writeFile(destination_path);
     console.log(destination_path+" saved");
@@ -241,7 +250,7 @@
     var arr_files_destination = [];
     for (var i in files2) {
       arr_files2[i] = path2 + '\\' + files2[i];
-      arr_files_destination[i] = path_destination + '\\merge' + files2[i];
+      arr_files_destination[i] = path_destination + '\\merge[1.1, 1.3, 1.8] ' + files2[i];
     }
 
     // console.log(arr_files1);
